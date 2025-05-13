@@ -1,5 +1,3 @@
-# Master's Final Degree Project #
-
 Artificial Intelligence and Big Data
 
 The motivation behind the project is to work as a team with the idea of joining everthing we've seen, in other words:
