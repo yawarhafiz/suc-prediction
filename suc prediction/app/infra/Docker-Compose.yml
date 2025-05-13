@@ -1,0 +1,45 @@
+# https://docs.docker.com/compose/
+services:
+  node-red:
+    container_name: node-red
+    # https://hub.docker.com/r/nodered/node-red/
+    build: ../services/node-red/
+    image: node-red
+    volumes:
+      - node-red_data:/data
+    networks:
+      - tfm-iabd-net
+    ports:
+      - 1880:1880
+    depends_on:
+      - "mongo"
+  mongo:
+    container_name: mongo-db
+    # https://hub.docker.com/r/_/mongo/
+    build: ../services/mongodb/
+    image: mongo
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - tfm-iabd-net
+    command: mongod --bind_ip 0.0.0.0
+    ports:
+      - "27017:27017"
+  models:
+    container_name: models
+    # https://hub.docker.com/r/_/mongo/
+    build: ../services/model/
+    image: jupyter/tensorflow-notebook:latest
+    networks:
+      - tfm-iabd-net
+    ports:
+      - "8888:8888"
+volumes:
+  node-red_data:
+    driver: "local"
+  mongodb_data:
+    driver: "local"
+  models:
+    driver: "local"
+networks:
+  tfm-iabd-net: {}
